@@ -56,8 +56,9 @@ public class TestAbbreviationWriter{
 	    AbbreviationWriter abbWriter = new AbbreviationWriter(buffWriter, abbMap);
 	    // Conduct testing of the AbbreviationWriter
 	    while(inScan.hasNext()) {
-		String line = inScan.nextLine();
-		abbWriter.write(line);
+		String line = inScan.nextLine() + "\n";
+		System.out.print(line);
+		// abbWriter.write(line);
 	    }
 	    abbWriter.close();
 	} catch (IOException e){
