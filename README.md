@@ -1,13 +1,33 @@
-Abbreviation-Writer acts as a decorator for the writer class. The main class, TestAbbreviationWriter, takes as input two command line arguments:
- 1. The name of a file where abbrevations are defined
- 2. The name of the text file to be read/written using the decorator
+Abbreviation Writer
+===================
 
-The main class TestAbbreviationWriter reads the file where the abbreviations are defined and creates a HashMap that maps the abbrevation to the expansion. The abbreviations file will contain the definitions, one per line in the following format:
+A decorator class for Java writer objects.
 
-PBS Public Broadcast System
+## Description
+AbbreviationWriter is a decorator for subclasses of (Java's abstract Writer class)[http://docs.oracle.com/javase/7/docs/api/java/io/Writer.html]. The class AbbreviationWriter.java extends FilterWriter. Its only constructor accepts two parameters, a HashMap with data types String, String, and a Writer object (the object that the AbbreviationWriter is decorating).
 
-The above lines defines PBS as an abbreviation to be expanded to "Public Broadcast System". When a Writer object has the Abbreviation-Writer decorator added, any occurence of @PBS (Delimited by a white space) will output the result "Public Broadcast System".
+AbbreviationWriter overrides the method Write(String str) in FilterWriter. The Write method split's the String parameter on whitespaces into a String array. The HashMap contains method checks for a key corresponding to a particular substring. If a match is found, that piece of the original String is replaced by the corresponding value in the HashMap. 
 
-The AbbreviationWriter class extends FilterWriter and can be added as a decorator to Writer objects. AbbreviationWriter has its own constructor and overrides FilterWriter's write(String str) method.
+## Example
 
-The test class TestAbbreviationWriter contains the main method. The main method accepts two command line arugments, opens and reads the abbreviations definitions, uses a Scanner to open the input text file and reads the output one line at a time. It writes each line using two instances of the AbbreviationWriter class (One to StringWriter and then to the Terminal Window, The other to a file named outfile.txt, using a BufferedWriter).
+Say that our HashMap contained the following key/value pairs:
+>{PBS=Public Broadcasting Service,
+>EFF=Electronic Frontier Foundation}
+
+And the following String was passed to the write method:
+>String str = "Last night PBS ran a good piece on the work the EFF is doing.";
+
+Then the write method would write out the following:
+>Last night Public Broadcasting Service ran a good piece on the work the Electronic Frontier Foundation is doing.
+
+## Usage
+Included is a test class, TestAbbreviationWriter.java, that can also act as a usage example. The test program requires two arguments. The first argument is the name (or path) of a file containing a list of abbreviations. The second argument is the name (or path) of a file containing text to be filtered. 
+
+The test class reads in the list of abbreviations and passes them into a HashMap with the abbreviations as keys and the expanded meanings as values. Two separate instances of AbbreviationWriter are then created. One decorates an instance of StringWriter and the other decorates an instance of BufferedWriter, which in turn is decorating a FileWriter. 
+
+The input file is read line by line and passed to the write methods of the two abbreviation writers. Once the end of file is reached the contents of StringWriter and printed to the terminal window. FileWriter prints to a file name outfile.txt.
+
+## Todo
+- Resolve the removal of newline characters issue
+- Rewrite the AbbreviationWriter.java method write(String str) to include punctuation as a delimiter(currently abbreviations are delimited by whitespace)
+- Upload a UML diagram for Writer classes
