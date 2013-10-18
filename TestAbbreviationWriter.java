@@ -72,25 +72,6 @@ public class TestAbbreviationWriter{
      * Functionality: Scans a file for abbreviations in the format 
      *                ABB abbreviation
      *                Populates a HashMap with the abbreviations as keys
-     *                and the expansions as values
-     * Visibility: private
-     * @param Scanner scan
-     * @return HashMap<String, String>
-     */
-    private HashMap<String, String> populateHashMap(Scanner scan){
-	HashMap<String, String> newMap = new HashMap<String, String>();
-	while(scan.hasNext()){
-	    String[] parts = (scan.nextLine()).split("\\s+", 2);
-	    newMap.put((parts[0]).toLowerCase(), parts[1]);
-	}
-	return newMap;
-    }
-
-    /**
-     * Method name: populateHashMap
-     * Functionality: Scans a file for abbreviations in the format 
-     *                ABB abbreviation
-     *                Populates a HashMap with the abbreviations as keys
      *                and the expansions as values. Prefixes the keys with
      *                the provided String delimiter.
      * Visibility: private
